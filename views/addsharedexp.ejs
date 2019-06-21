@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <style>
+            body{
+                    background: #f0f5f5;
+            }
+    #shareexp{
+            margin :0;
+            text-align: center;
+            padding: 30px;
+            border: 2px solid #bdc7d8;
+            background-color: blanchedalmond;
+            flex: 2;
+    }
+    input{
+            margin: 10px;
+            width: 200px;
+
+    }
+    #d{
+            height: 70px;
+    }
+    label{
+            text-align: left
+    }
+    button{
+         
+         height: 35px;
+         width: 150px;
+         background-color:#0073e6;
+         color: white;
+         border-radius: 5px;
+         border: none
+     }
+    
+      button:hover{
+        background-color:#1a8cff;
+      }
+      #main{
+              display: flex;
+             
+              margin: 20px;
+      }
+      #oc{
+              flex: 1;
+              background-color: #bdc7d8;
+              padding: 30px;
+              text-align: center;
+      }
+    </style>
+    </head>
+
+    <body>
+            <nav class="navbar navbar-default navbar-static-top">
+                    <div class="container">
+                        <ul class="nav navbar-nav">
+                        <li><a href="/user">Home</a></li>
+                        </ul>
+                        
+                           <ul class="nav navbar-nav navbar-right">
+                                   <li id="logout"><a href="/logout">Logout</a></li>
+                           </ul>
+                    </div>
+                     
+                      
+               
+                </nav>
+                 <div id="main">
+            <div id="oc">   
+                  <h4><strong> Available users to Lend</strong> </h4>   
+                <% users.forEach(function(user2){ %>
+                       <p><%= user2.username %></p>
+                <%  }) %>
+                 
+                    
+            </div>
+               <div id="shareexp">
+
+                <form action="/user/addsharedexp" method="POST" >
+                 <label for="owid">Shareholder name</label> <br>       
+                <input type="text" name="owid" placeholder="shared member" required><br>
+                <label for="title">Title</label><br>  
+                <input type="text" name="title" placeholder="title" required> <br>
+                <label for="description">Description</label><br>  
+                <input type="text" name="content" placeholder="description" id="d" required> <br>
+               <label for="bill">Bill Amount</label><br>  
+                <input type="number" name="bill" placeholder="Bill Amount Paid by you" required> <br>
+                <label for="lent">Money lent</label><br>  
+                <input type="number" name="lent" placeholder="Other's Share of Bill in Rs." required><br>
+
+                <button>Add Expense</button>
+                </form>
+                </div>
+        </div>
+                <script
+                src="https://code.jquery.com/jquery-3.4.1.js"
+                integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+                crossorigin="anonymous"></script>
+                        
+    </body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+    <head>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <style>
+    body{
+                    background: #f0f5f5;
+            }
+    #personalexp{
+            margin :200px 35%;
+            text-align: center;
+            padding: 30px;
+            border: 2px solid #bdc7d8;
+            background-color: blanchedalmond;
+    }
+    input{
+            margin: 10px;
+            width: 200px;
+
+    }
+    #d{
+            height: 70px;
+    }
+    label{
+            text-align: left
+    }
+    button{
+         
+         height: 35px;
+         width: 150px;
+         background-color:#0073e6;
+         color: white;
+         border-radius: 5px;
+         border: none
+     }
+    
+      button:hover{
+        background-color:#1a8cff;
+      }
+    
+    </style>
+    </head>
+    <body>
+            <nav class="navbar navbar-default navbar-static-top">
+                    <div class="container">
+                        <ul class="nav navbar-nav">
+                        <li><a href="/user">Home</a></li>
+                        </ul>
+                        
+                           <ul class="nav navbar-nav navbar-right">
+                                   <li id="logout"><a href="/logout">Logout</a></li>
+                           </ul>
+                    </div>
+                     
+                      
+               
+                </nav>
+                 
+            
+                <div id="personalexp">
+                <form action="/user/addpersonalexp" method="POST" >
+                 <label for="title">Title</label>  <br>     
+                <input type="text" name="title" placeholder="title" required> <br>
+                <label for="content">Description</label>  <br>   
+                <input type="text" name="content" placeholder="description" id="d" required> <br>
+                <label for="expense"> Expense</label>  <br>   
+                <input type="number" name="expense" placeholder="expense in Rs." required> <br>
+
+               <button>Add Expense </button>
+                </form>
+                </div>
+                <script
+                src="https://code.jquery.com/jquery-3.4.1.js"
+                integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+                crossorigin="anonymous"></script>
+    </body>
+</html>

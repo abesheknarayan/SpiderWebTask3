@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Splitwise</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+<style>
+    body{
+    background-color:#f0f5f5;
+}
+#nav {
+    background-color:#b3ecff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+#nav a{
+    color:black;
+}
+#nav a:hover{
+    color:gray;
+}
+form{
+    float: left;
+}
+button{
+    margin:2px;
+}
+.flex{
+    display: flex;
+    justify-content: space-around;
+    flex-grow: inherit;
+    min-height: 700px;
+}
+#userdetails{
+    text-align: center;
+    flex: 2;
+    background-color: aliceblue;
+}
+#sortdiv{
+    margin-left: 10%;
+    
+}
+#filter{
+    margin-left: 10%;
+}
+button{
+         
+         height: 35px;
+       
+         background-color:#0073e6;
+         color: white;
+         border-radius: 5px;
+         border: none
+     }
+    
+      button:hover{
+        background-color:#1a8cff;
+      }
+      #filterbtn{
+      width: 70px;
+  }
+#payerlist{
+    text-align: center;
+    background-color:lightslategray;
+    flex: 3;
+}  
+#owerslist{
+    text-align: center;
+    background-color: #f18e8e;
+    flex: 3;
+}
+
+#buttons button{
+    width: 200px;
+    background-color: rgb(121,188,100);
+  }
+  #buttons button:hover{
+    background-color: rgb(87,136,67);
+
+  }
+  #msg{
+      position: absolute;
+      left:40%;
+      top: 30%;
+      text-align: center;
+      background-color:skyblue;
+      padding: 40px;
+      border: 2px solid lightcyan;
+      border-radius: 10px;
+
+  }
+  #okbtn{
+      margin-left: 130px;
+      width: 50px;
+      margin-top: 10px;
+
+  }
+ .expbtn{
+     margin-left: 120px;
+ }
+ .payer{
+     display: flex;
+     flex-direction: column;
+     
+ }
+
+ .payerdetails{
+flex: 1;
+background-color: rgba(176,196,222,1);
+border-radius: 5px;
+margin-bottom: 1px;
+ }
+ .payerdetails:hover{
+     background-color: #dce6ef;
+ }
+ .owerdetails{
+flex: 1;
+background-color: #c2d6d6;
+border-radius: 5px;
+margin-bottom: 1px;
+
+ }
+ .owerdetails:hover{
+     background-color: #dce6ef;
+ }
+.p1{
+  margin-bottom: 0px;
+}
+p{
+    margin: 0;
+}
+.sbtn{
+    margin-left: 315px;
+}
+</style>
+    </head>
+    <body> 
+        <section id="sec1">
+            <nav class="navbar navbar-default navbar-static-top" id="nav">
+                    <div class="container">
+                        <ul class="nav navbar-nav">
+                        <li><a href="/user">Home</a></li>
+                        </ul>
+                        
+                           <ul class="nav navbar-nav navbar-right">
+                                   <li id="logout"><a href="/logout">Logout</a></li>
+                           </ul>
+                    </div>
+                     
+                      
+               
+                </nav>
+                <div id="sortdiv"> 
+                    <button id="filterbtn">Filter</button>
+                   </div>
+                   <div id="filter">
+                      <form action="/sharedexpense/sort/1" method="POST">
+                          <button class="sortbtn"> Expense high to low</button>
+                      </form>
+                      <form action="/sharedexpense/sort/2" method="POST">
+                          <button class="sortbtn"> Expense low to high</button>
+                      </form>
+                      <form action="/sharedexpense/sort/3" method="POST">
+                          <button class="sortbtn">Recent First</button>
+                      </form>
+                      
+                      <form action="/sharedexpense/sort/4" method="POST">
+                          <button class="sortbtn">Recent Last</button>
+                      </form><br>
+                      
+              </div><br>
+    <div class="flex">
+
+            
+                 
+   <div id="userdetails">
+       <h2>User Details</h2>
+       <p>Username <br> <%= user.username %></p>
+       <p>Balance <br> <%= user.splitbalance %></p>
+     
+      
+        
+       <div id="buttons">
+        <form action="/user/addpersonalexp" method="GET">
+            
+        
+        <button id="add" class="expbtn">Add Personal Expenses</button>
+        </form><br><br>
+        
+        <form action="/user/addsharedexp"method="GET">
+        <button class="expbtn">
+         Add Shared Expense
+        </button>
+        </form>
+        </div>
+       
+   </div
+   >
+   <div id="payerlist">
+       
+       <h4>You Owe</h4> <h2>Rs.<%= user.oweothers %></h2>
+       <h2>Lenders List</h2>
+      
+       <% if(payers.length==0){  %>
+
+       <p>  You owe nothing to Others  </p>  
+
+       <% } %>
+       <div class="payer">
+        <%  payers.forEach(function(payer){  %>
+            <div class="payerdetails">
+            <p class="">You owe <%= payer.payid %> <%= payer.lent %>  </p> 
+            <div class="extra">
+                    <p>Total bill Amount: Rs.<%= payer.bill %></p>
+             <p><%= payer.billdate %></p>   
+
+           
+            <p></p>
+            </div>
+            <br>
+            <div class="settlebtn">
+
+          <form action="/share/settle/<%= payer.id %>" method="POST">
+        <button class="sbtn">Settle Up</button>
+
+        </form>
+          
+            
+
+           </div>
+        </div>
+      
+        <%  }); %>
+    </div>
+   </div>
+    
+    <div id="owerslist">
+       <h4>You are owed <br> </h4>
+             <h2>Rs.<%= user.payyou %></h2> 
+    <h2>Owers list</h2>
+    <% if(owers.length==0){  %>
+
+        <p>  No one owes you  </p>  
+ 
+        <% } %>
+   
+  <%  owers.forEach(function(ower){  %>
+    <div class="owerdetails">
+      <p><%= ower.oweid %>   owes you Rs.<%= ower.lent %>  </p> 
+     
+      <div class="extra">
+            <p>Total bill Amount: Rs.<%= ower.bill %></p>
+     <p class="p1" ><%= ower.billdate %></p>   
+
+   
+   
+    </div>
+</div>
+  <%  }); %>
+
+    </div>    
+</div> 
+</section>
+<div id="msg">
+    <h2>Bill Settled Succesfully</h2>
+    <form action="/user/splitwise">
+    <button id="okbtn">OK</button>
+    </form>
+</div>
+    <script
+src="https://code.jquery.com/jquery-3.4.1.js"
+integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+crossorigin="anonymous"></script>
+<script>
+
+
+        var filterbtn=document.querySelector("#filterbtn");
+        var filterdiv=document.querySelector("#filter");
+        var sortbtns=document.querySelectorAll(".sortbtn");
+        var toggle=0;
+        var settlebtn=document.querySelectorAll(".settlebtn");
+        var okbtn=document.querySelector("#okbtn");
+        var sec1=document.querySelector("#sec1");
+        filterdiv.style.display="none";
+        var msg=document.querySelector("#msg");
+        var payerdetails=document.querySelectorAll(".payerdetails");
+        var extra=document.querySelectorAll(".extra");
+        msg.style.display="none";
+        var i=0;
+
+
+        filterbtn.addEventListener("click",function()
+        { if(!toggle)
+            {
+                filterdiv.style.display="";
+                toggle=1;
+            }
+            else {
+                filterdiv.style.display="none";
+                toggle=0;
+            }
+        });
+        sortbtns.forEach(function(btn)
+        {
+            btn.addEventListener("click",function()
+            {
+               filterdiv.style.display="none"; 
+            })
+        });
+        settlebtn.forEach(function(btn)
+        {
+            btn.addEventListener("click",function()
+            {
+                  msg.style.display="";
+                  sec1.style.opacity=0.1;
+            })
+        });
+      
+            
+         
+
+           
+           
+        
+        
+           
+        
+        </script>
+        
+    </body>
+
+    
+</html>

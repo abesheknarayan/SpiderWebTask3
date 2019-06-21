@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Server App</title>
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+   <style>
+  #editexp{
+      position: absolute;
+      left:300px;
+      top:300px;
+
+  }
+body{
+    background-color:#f0f5f5;
+}
+#nav{
+    background-color:#b3ecff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: black;
+    font-weight: 700;
+}
+#nav a{
+    color:black;
+}
+#nav a:hover{
+    color:gray;
+}
+  
+  .div-col{
+      float: left;
+      display: table-column;
+      width:250px;
+      height: 50px;
+      border: 1px solid black;
+      text-align: center;
+      padding-top: 6px;
+       
+
+  }
+  .div-table{
+           display:table;
+           background-color: antiquewhite;
+           width: auto;
+
+           
+
+  }
+  #flex0{
+      display: flex
+  }
+  #userdetails{
+      flex:1;
+      float:left;
+      margin-left: 10px;
+      
+  }
+  #flex1{
+     flex: 1;
+  }
+  #content{
+      width:500px;
+  }
+  #contenthead{
+      width: 500px;
+  }
+  /* button{
+      display: inline-block;
+  } */
+  form{
+      
+      display: inline;
+  }
+  button{
+      margin:5px;
+  }
+  
+  .deletebtn{
+      margin: 0px;
+  }
+
+  #filterbtn{
+      width: 70px;
+  }
+
+ .expbtn{
+     width: 200px;
+ }
+ .del{
+     width: 200px;
+     
+ }
+  #sec2{
+      
+      margin: 0;
+      flex: 3;
+      padding: 50px;
+      padding-top: 0;
+    
+  }
+  button{
+         
+         height: 35px;
+       
+         background-color:#0073e6;
+         color: white;
+         border-radius: 5px;
+         border: none
+     }
+    
+      button:hover{
+        background-color:#1a8cff;
+      }
+  #userdetails p
+{
+    font-size: 15px;
+}  
+  #flex-sec{
+      display: flex;
+      padding: 0;
+  }
+  #buttons button{
+    background-color: rgb(121,188,100);
+  }
+  #buttons button:hover{
+    background-color: rgb(87,136,67);
+
+  }
+
+  .deletebtn{
+      background-color:#ff5050;
+      color: white;
+
+  }
+  .deletebtn:hover{
+      background-color: #ff0000;
+  }
+
+   </style>
+
+</head>
+<body>
+ <nav class="navbar navbar-default navbar-static-top" id="nav">
+     <div class="container">
+         <ul class="nav navbar-nav">
+         <li><a href="/user">Home</a></li>
+         <li><a href="/user/splitwise">Go to Splitwise</a></li>
+         </ul>
+         
+            <ul class="nav navbar-nav navbar-right">
+                    <li id="logout"><a href="/logout">Logout</a></li>
+            </ul>
+     </div>
+      
+       
+
+ </nav>
+  
+<section id="flex-sec">
+ <section id="sec1">
+
+<div id="userdetails">
+        <h1>User Details</h1> <br>
+        <p style="text-align: center"> Accountant Name <br> <%= user.username %> </p>
+        <p style="text-align: center">Total Personal Expense  <br> Rs.<%= user.totalexpense %></p>
+
+<div id="flex-1">
+        <br><br>
+        
+        
+        <div id="buttons">
+        <form action="/user/addpersonalexp" method="GET">
+            
+        
+        <button id="add" class="expbtn">Add Personal Expenses</button>
+        </form><br>
+        
+        <form action="/user/addsharedexp"method="GET">
+        <button class="expbtn">
+         Add shared expense
+        </button>
+        </form>
+        </div>
+         
+
+</div>
+
+</div>
+</section>
+<section id="sec2">
+
+<div id="expenses">
+<h1>Dashboard</h1>
+<div id="sortdiv">
+<button id="filterbtn">Filter</button>
+<div id="filter">
+        <form action="/expense/sort/1" method="POST">
+            <button class="sortbtn"> Expense high to low</button>
+        </form>
+        <form action="/expense/sort/2" method="POST">
+            <button class="sortbtn"> Expense low to high</button>
+        </form>
+        <form action="/expense/sort/3" method="POST">
+            <button class="sortbtn">Recent First</button>
+        </form>
+        
+        <form action="/expense/sort/4" method="POST">
+            <button class="sortbtn">Recent Last</button>
+        </form>
+        
+        <br>
+</div>
+</div>
+
+<div class="div-table">
+ 
+     <% if(expenses.length==0){ %>
+      <h2 style="padding: 10px"> No Expenses as of now</h2>
+     <% } %>
+     <% if(expenses.length!=0){ %>
+        <div class="tablehead">
+
+        <div class="div-col"> <strong>Title</strong></div>
+        <div class="div-col" id="contenthead"><strong>Desciption</strong></div>
+        <div class="div-col"><strong>Amount</strong></div>
+        <div class="div-col"><strong>BillDate</strong></div>
+        
+        <div class="div-col del">Option</div>
+    </div> 
+    <% expenses.forEach(function(exp){ %>
+
+        <div >
+        <div class="div-col"><%= exp.title %></div>
+        <div class="div-col" id="content"><%= exp.content %></div>
+        <div class="div-col"><%= exp.expense %></div>
+        <div class="div-col expdate" ><%= exp.billdate %></div>
+        <div class="div-col del">
+            
+               
+                <form action="/expense/delete/<%= exp.id %>" method="POST" >
+                <button class="deletebtn">Delete</button>
+                </form>
+                  
+                
+        </div>
+        
+        </div>
+        
+        <% }); %>
+         
+     <% } %>
+
+
+
+</div>
+</div>
+</div>
+
+
+</div>
+</section>
+</section>
+<script
+src="https://code.jquery.com/jquery-3.4.1.js"
+integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+crossorigin="anonymous"></script>
+<script>
+
+
+var filterbtn=document.querySelector("#filterbtn");
+var filterdiv=document.querySelector("#filter");
+var sortbtns=document.querySelectorAll(".sortbtn");
+var toggle=0;
+filterdiv.style.display="none";
+filterbtn.addEventListener("click",function()
+{ if(!toggle)
+    {
+        filterdiv.style.display="";
+        toggle=1;
+    }
+    else {
+        filterdiv.style.display="none";
+        toggle=0;
+    }
+});
+sortbtns.forEach(function(btn)
+{
+    btn.addEventListener("click",function()
+    {
+       filterdiv.style.display="none"; 
+    })
+})
+
+</script>
+
+</body>
+</html>
+
+
+
